@@ -30,6 +30,13 @@
         <applicationConfigurable instance="ru.sadv1r.afc.ideaPlugin.PluginConfigurable"/>
     </extensions>
 
+    <application-components>
+        <component>
+            <implementation-class>ru.sadv1r.afc.ideaPlugin.Stats</implementation-class>
+            <interface-class>ru.sadv1r.afc.ideaPlugin.Stats</interface-class>
+        </component>
+    </application-components>
+
     <actions>
         <!-- Add your actions here -->
     </actions>

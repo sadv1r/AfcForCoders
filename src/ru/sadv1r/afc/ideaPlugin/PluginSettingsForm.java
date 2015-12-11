@@ -7,9 +7,13 @@ package ru.sadv1r.afc.ideaPlugin;
  * @version 0.1
  */
 
+import com.intellij.ui.JBColor;
 import net.miginfocom.swing.MigLayout;
+import ru.sadv1r.afc.ideaPlugin.achievements.TenSymbolsTyped;
+import ru.sadv1r.afc.ideaPlugin.achievements.ThousandSymbolsTyped;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,7 +21,8 @@ public class PluginSettingsForm {
     private final JPanel root;
     private final JCheckBox playOffline = new JCheckBox();
     private final JTextField token = new JTextField();
-    private JLabel TokenLabel = new JLabel("Token");
+    private JLabel tokenLabel = new JLabel("Token");
+    private JButton browse = new JButton("Test");
 
     public PluginSettingsForm() {
 
@@ -31,23 +36,62 @@ public class PluginSettingsForm {
                     enableOrDisableProjectSettings();
                 }
             });
+            //playOffline.setSelected(true);
             projectSettings.add(playOffline, "wrap");
         }
         {
-            TokenLabel.setDisplayedMnemonic('C');
-            TokenLabel.setLabelFor(token);
+            tokenLabel.setDisplayedMnemonic('C');
+            tokenLabel.setLabelFor(token);
 
-            JButton browse = new JButton("Test");
+
             browse.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Тестик нажал");
                 }
             });
 
-            projectSettings.add(TokenLabel, "wrap");
+            projectSettings.add(tokenLabel, "wrap");
             projectSettings.add(token, "growx");
             projectSettings.add(browse, "wrap");
         }
+
+
+        JPanel ideSettings = new JPanel(new MigLayout("", "[grow]", "[nogrid]"));
+        ideSettings.setBorder(BorderFactory.createTitledBorder("Achievements"));
+        ideSettings.setLayout(new BoxLayout(ideSettings, BoxLayout.PAGE_AXIS));
+        {
+            ideSettings.add(getAchievementPanel(new TenSymbolsTyped()));
+            ideSettings.add(Box.createVerticalStrut(7));
+            ideSettings.add(getAchievementPanel(new ThousandSymbolsTyped()));
+
+        }
+
+
+
+//        {
+//            JLabel label = new JLabel("SBT launcher JAR file (sbt-launch.jar). Leave blank to use the bundled launcher.");
+//            label.setDisplayedMnemonic('L');
+//            label.setLabelFor(applicationSbtLauncherJarPath);
+//            label.setToolTipText("When using the bundled launcher, ./project/build.properties should contain the desired SBT version, e.g. sbt.version=0.12.0");
+//
+//            JButton browse = new JButton("...");
+//            browse.addActionListener(new ActionListener() {
+//                public void actionPerformed(ActionEvent e) {
+//                    browseForSbtLauncherJar(SbtSettingsForm.this.applicationSbtLauncherJarPath);
+//                }
+//            });
+//
+//            ideSettings.add(label, "wrap");
+//            ideSettings.add(applicationSbtLauncherJarPath, "growx");
+//            ideSettings.add(browse, "wrap");
+//        }
+//        {
+//            JLabel label = new JLabel("VM parameters");
+//            label.setDisplayedMnemonic('V');
+//            label.setLabelFor(applicationVmParameters);
+//            ideSettings.add(label, "wrap");
+//            ideSettings.add(applicationVmParameters, "wrap, growx");
+//        }
 
 //        JPanel ideSettings = new JPanel(new MigLayout("", "[grow]", "[nogrid]"));
 //        ideSettings.setBorder(BorderFactory.createTitledBorder("Other Settings"));
@@ -78,8 +122,40 @@ public class PluginSettingsForm {
 
         root = new JPanel(new MigLayout("wrap 1", "[grow]"));
         root.add(projectSettings, "grow");
-//        root.add(ideSettings, "grow");
+        root.add(ideSettings, "grow");
         enableOrDisableProjectSettings();
+    }
+
+    private JPanel getAchievementPanel(Achievable achievement) {
+        final JPanel panel = new JPanel();
+        panel.setBackground(JBColor.GRAY);
+        panel.setPreferredSize(new Dimension(0, 50));
+        panel.setToolTipText(achievement.getText());
+
+        if (achievement.getFinish() <= achievement.getProgress()) {
+            JLabel label = new JLabel(achievement.getName());
+            label.setDisplayedMnemonic('V');
+            panel.add(label, "wrap");
+        } else {
+            JProgressBar jProgressBar = new JProgressBar(0, achievement.getFinish()){
+                    @Override
+                    public Dimension getPreferredSize() {
+                        return new Dimension(700, 30);
+                    }
+                };
+
+            jProgressBar.setValue(achievement.getProgress());
+            System.out.println(achievement.getProgress() + "ll");
+            jProgressBar.setStringPainted(true);
+            jProgressBar.setString(achievement.getProgress() + "/" + achievement.getFinish());
+
+            JLabel label = new JLabel(achievement.getName());
+            label.setDisplayedMnemonic('V');
+            label.setLabelFor(jProgressBar);
+            panel.add(label);
+            panel.add(jProgressBar);
+        }
+        return panel;
     }
 
     /**
@@ -91,7 +167,7 @@ public class PluginSettingsForm {
         if (token.getText().length() == 0) {
             pluginSettings.setToken("");
         } else {
-            System.out.println("пихаю в файл:" + token.getText());
+            System.out.println("Сохраняю настройки");
             pluginSettings.setToken(token.getText());
         }
 
@@ -115,16 +191,17 @@ public class PluginSettingsForm {
     }
 
     public boolean isModified(PluginSettings pluginSettings) {
-        PluginSettings currentSettings = new PluginSettings();
-        copyTo(currentSettings);
-        return !currentSettings.equals(pluginSettings);
+        return !(this.playOffline.isSelected() == pluginSettings.isPlayOffline() &&
+                this.token.getText().equals(pluginSettings.getToken()));
     }
+
 
 
     private void enableOrDisableProjectSettings() {
         boolean enable = !playOffline.isSelected();
-        TokenLabel.setEnabled(enable);
+        tokenLabel.setEnabled(enable);
         token.setEnabled(enable);
+        browse.setEnabled(enable);
     }
 
     public JComponent createComponent() {
@@ -134,7 +211,7 @@ public class PluginSettingsForm {
     public static void main(String[] args) {
         PluginSettingsForm form = new PluginSettingsForm();
 
-        JFrame frame = new JFrame("Test: SbtSettingsForm");
+        JFrame frame = new JFrame("Test: AfcSettingsForm");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(form.createComponent());
         frame.setSize(600, 600);
