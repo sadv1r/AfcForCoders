@@ -12,23 +12,23 @@ public class PluginSettings {
     private final PropertiesComponent properties = PropertiesComponent.getInstance();
 
     public String getToken() {
-        if (properties.isValueSet("progTime_token")) {
-            return properties.getValue("progTime_token");
+        if (properties.isValueSet("afc_token")) {
+            return properties.getValue("afc_token");
         } else {
             return "";
         }
     }
 
     public void setToken(String token) {
-        properties.setValue("progTime_token", token);
+        properties.setValue("afc_token", token);
     }
 
     public boolean isPlayOffline() {
-        return properties.getBoolean("progTime_playOffline");
+        return properties.getBoolean("afc_playOffline");
     }
 
     public void setPlayOffline(boolean playOffline) {
-        properties.setValue("progTime_playOffline" , playOffline);
+        properties.setValue("afc_playOffline" , playOffline);
     }
 
 }
