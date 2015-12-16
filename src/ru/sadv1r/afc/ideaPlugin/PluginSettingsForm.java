@@ -9,6 +9,7 @@ package ru.sadv1r.afc.ideaPlugin;
 
 import com.intellij.ui.JBColor;
 import net.miginfocom.swing.MigLayout;
+import ru.sadv1r.afc.ideaPlugin.achievements.HelloWorld;
 import ru.sadv1r.afc.ideaPlugin.achievements.TenSymbolsTyped;
 import ru.sadv1r.afc.ideaPlugin.achievements.ThousandSymbolsTyped;
 
@@ -63,6 +64,8 @@ public class PluginSettingsForm {
             ideSettings.add(getAchievementPanel(new TenSymbolsTyped()));
             ideSettings.add(Box.createVerticalStrut(7));
             ideSettings.add(getAchievementPanel(new ThousandSymbolsTyped()));
+            ideSettings.add(Box.createVerticalStrut(7));
+            ideSettings.add(getAchievementPanel(new HelloWorld()));
 
         }
 
@@ -137,17 +140,17 @@ public class PluginSettingsForm {
             label.setDisplayedMnemonic('V');
             panel.add(label, "wrap");
         } else {
-            JProgressBar jProgressBar = new JProgressBar(0, achievement.getFinish()){
-                    @Override
-                    public Dimension getPreferredSize() {
-                        return new Dimension(700, 30);
-                    }
-                };
+            //UIManager.put("ProgressBar.background", Color.GREEN);
+            //UIManager.put("ProgressBar.foreground", Color.GREEN);
+            //UIManager.put("ProgressBar.selectionBackground", Color.WHITE);
+            //UIManager.put("ProgressBar.selectionForeground", Color.WHITE);
+            JProgressBar jProgressBar = new JProgressBar(0, achievement.getFinish());
 
             jProgressBar.setValue(achievement.getProgress());
             System.out.println(achievement.getProgress() + "ll");
             jProgressBar.setStringPainted(true);
             jProgressBar.setString(achievement.getProgress() + "/" + achievement.getFinish());
+            jProgressBar.setPreferredSize(new Dimension(700, 20));
 
             JLabel label = new JLabel(achievement.getName());
             label.setDisplayedMnemonic('V');

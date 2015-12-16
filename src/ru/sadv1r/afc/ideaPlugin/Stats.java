@@ -17,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 )
 public class Stats implements PersistentStateComponent<Stats>, ApplicationComponent {
     public int symbolsTyped;
+    public int helloWorldAchieved;
 
     public int getSymbolsTyped() {
         return symbolsTyped;
@@ -24,6 +25,14 @@ public class Stats implements PersistentStateComponent<Stats>, ApplicationCompon
 
     public void symbolTyped() {
         symbolsTyped++;
+    }
+
+    public int getHelloWorldAchieved() {
+        return helloWorldAchieved;
+    }
+
+    public void setHelloWorldAchieved() {
+        this.helloWorldAchieved = 1;
     }
 
     @Nullable

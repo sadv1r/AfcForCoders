@@ -28,6 +28,8 @@
         <!-- Add your extensions here -->
         <typedHandler implementation="ru.sadv1r.afc.ideaPlugin.MyTypedHandlerDelegate"/>
         <applicationConfigurable instance="ru.sadv1r.afc.ideaPlugin.PluginConfigurable"/>
+
+        <consoleFilterProvider implementation="ru.sadv1r.afc.ideaPlugin.MyConsoleFilter"/>
     </extensions>
 
     <application-components>
