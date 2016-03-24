@@ -10,8 +10,8 @@ import ru.sadv1r.afc.ideaPlugin.Achievable;
  */
 public class TenSymbolsTyped implements Achievable {
     private int finish = 10;
-    private final String name = "Найти клавиатуру";
-    private final String text = "Напечатать " + getFinish() + " символов";
+    private final String name = "Find the keyboard";
+    private final String text = "Type " + getFinish() + " symbols";
 
     @Override
     public String getName() {

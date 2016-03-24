@@ -10,8 +10,8 @@ import ru.sadv1r.afc.ideaPlugin.Achievable;
  */
 public class ThousandSymbolsTyped implements Achievable {
     private int finish = 1000;
-    private final String name = "Попробовать что-то написать";
-    private final String text = "Напечатать " + getFinish() + " символов";
+    private final String name = "Try to code something";
+    private final String text = "Type " + getFinish() + " symbols";
 
     @Override
     public String getName() {

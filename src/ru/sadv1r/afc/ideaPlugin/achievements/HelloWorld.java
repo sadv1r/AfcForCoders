@@ -15,8 +15,8 @@ import ru.sadv1r.afc.ideaPlugin.Stats;
 public class HelloWorld implements Filter, Achievable {
     private final static Stats stats = ServiceManager.getService(Stats.class);
     private int finish = 1;
-    private final String name = "Поздороваться с миром";
-    private final String text = "Написать традиционный Hello World";
+    private final String name = "Say hi to all";
+    private final String text = "Type traditional Hello World";
 
     @Nullable
     @Override
