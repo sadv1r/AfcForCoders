@@ -6,9 +6,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Created by sadvr on 12/10/15.
+ * Created on 12/10/15.
+ *
+ * @author sadv1r
+ * @version 0.1
  */
-//@State(name = "AfcStats", storages = {@Storage(id = "default", file = StoragePathMacros.PROJECT_CONFIG_DIR + "/other.xml", scheme = StorageScheme.DIRECTORY_BASED)})
 @State(
         name = "AfcStats",
         storages = {
@@ -16,8 +18,15 @@ import org.jetbrains.annotations.Nullable;
         }
 )
 public class Stats implements PersistentStateComponent<Stats>, ApplicationComponent {
+    //TenSymbolsTyped, ThousandSymbolsTyped
     public int symbolsTyped;
+
+    //HelloWorld
     public int helloWorldAchieved;
+
+    //WeekWithoutNullPointerException
+    public int daysWithoutNullPointer;
+    public long lastDateWithoutNullPointer;
 
     public int getSymbolsTyped() {
         return symbolsTyped;
@@ -33,6 +42,26 @@ public class Stats implements PersistentStateComponent<Stats>, ApplicationCompon
 
     public void setHelloWorldAchieved() {
         this.helloWorldAchieved = 1;
+    }
+
+    public int getDaysWithoutNullPointer() {
+        return daysWithoutNullPointer;
+    }
+
+    public void addDayWithoutNullPointer() {
+        this.daysWithoutNullPointer++;
+    }
+
+    public void resetDaysWithoutNullPointer() {
+        this.daysWithoutNullPointer = 0;
+    }
+
+    public long getLastDateWithoutNullPointer() {
+        return lastDateWithoutNullPointer;
+    }
+
+    public void setLastDateWithoutNullPointer(long lastDateWithoutNullPointer) {
+        this.lastDateWithoutNullPointer = lastDateWithoutNullPointer;
     }
 
     @Nullable

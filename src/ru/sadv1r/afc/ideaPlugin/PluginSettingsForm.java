@@ -12,6 +12,7 @@ import net.miginfocom.swing.MigLayout;
 import ru.sadv1r.afc.ideaPlugin.achievements.HelloWorld;
 import ru.sadv1r.afc.ideaPlugin.achievements.TenSymbolsTyped;
 import ru.sadv1r.afc.ideaPlugin.achievements.ThousandSymbolsTyped;
+import ru.sadv1r.afc.ideaPlugin.achievements.WeekWithoutNullPointerException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -66,6 +67,10 @@ public class PluginSettingsForm {
             ideSettings.add(getAchievementPanel(new ThousandSymbolsTyped()));
             ideSettings.add(Box.createVerticalStrut(7));
             ideSettings.add(getAchievementPanel(new HelloWorld()));
+            ideSettings.add(Box.createVerticalStrut(7));
+            ideSettings.add(getAchievementPanel(new WeekWithoutNullPointerException()));
+
+
 
         }
 
@@ -136,7 +141,7 @@ public class PluginSettingsForm {
         panel.setToolTipText(achievement.getText());
 
         if (achievement.getFinish() <= achievement.getProgress()) {
-            JLabel label = new JLabel(achievement.getName());
+            JLabel label = new JLabel(achievement.getName() + " (Achieved)");
             label.setDisplayedMnemonic('V');
             panel.add(label, "wrap");
         } else {
@@ -147,7 +152,6 @@ public class PluginSettingsForm {
             JProgressBar jProgressBar = new JProgressBar(0, achievement.getFinish());
 
             jProgressBar.setValue(achievement.getProgress());
-            System.out.println(achievement.getProgress() + "ll");
             jProgressBar.setStringPainted(true);
             jProgressBar.setString(achievement.getProgress() + "/" + achievement.getFinish());
             jProgressBar.setPreferredSize(new Dimension(700, 20));
@@ -164,7 +168,7 @@ public class PluginSettingsForm {
     /**
      * Метод переносит данные из формы в память
      *
-     * @param pluginSettings
+     * @param pluginSettings объект настроек плагина
      */
     public void copyTo(PluginSettings pluginSettings) {
         if (token.getText().length() == 0) {
@@ -181,7 +185,7 @@ public class PluginSettingsForm {
     /**
      * Метод переносит данные из памяти в форму
      *
-     * @param pluginSettings
+     * @param pluginSettings объект настроек плагина
      */
     public void copyFrom(PluginSettings pluginSettings) {
         if (pluginSettings.getToken().length() == 0) {
@@ -215,7 +219,7 @@ public class PluginSettingsForm {
         PluginSettingsForm form = new PluginSettingsForm();
 
         JFrame frame = new JFrame("Test: AfcSettingsForm");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setContentPane(form.createComponent());
         frame.setSize(600, 600);
         frame.setLocation(500, 300);

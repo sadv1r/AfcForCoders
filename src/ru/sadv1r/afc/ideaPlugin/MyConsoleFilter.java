@@ -5,6 +5,7 @@ import com.intellij.execution.filters.Filter;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 import ru.sadv1r.afc.ideaPlugin.achievements.HelloWorld;
+import ru.sadv1r.afc.ideaPlugin.achievements.WeekWithoutNullPointerException;
 
 /**
  * Created by sadvr on 12/11/15.
@@ -14,7 +15,9 @@ public class MyConsoleFilter implements ConsoleFilterProvider {
     @Override
     public Filter[] getDefaultFilters(@NotNull Project project) {
         HelloWorld helloWorld = new HelloWorld();
-        Filter[] filters = new Filter[] {helloWorld};
+        WeekWithoutNullPointerException weekWithoutNullPointerException = new WeekWithoutNullPointerException();
+
+        Filter[] filters = new Filter[] {helloWorld, weekWithoutNullPointerException};
         return filters;
     }
 }

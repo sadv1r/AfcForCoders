@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>ru.sadv1r.afc.ideaPlugin</id>
     <name>AFC for coders</name>
-    <version>0.1</version>
+    <version>0.1.2</version>
     <vendor email="sadv12@gmail.com" url="http://www.afc.sadv1r.ru">Sadv1r</vendor>
 
     <description><![CDATA[
@@ -10,8 +10,8 @@
     ]]></description>
 
     <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
+      Added <b>Week without NullPointerException</b> achievement.<br>
+      All Achievements translated to English.
     ]]>
     </change-notes>
 
@@ -30,6 +30,8 @@
         <applicationConfigurable instance="ru.sadv1r.afc.ideaPlugin.PluginConfigurable"/>
 
         <consoleFilterProvider implementation="ru.sadv1r.afc.ideaPlugin.MyConsoleFilter"/>
+
+        <toolWindow id="AfcForCoders" icon="/icon.png" anchor="right" factoryClass="ru.sadv1r.afc.ideaPlugin.MyToolWindowFactory"/>
     </extensions>
 
     <application-components>
