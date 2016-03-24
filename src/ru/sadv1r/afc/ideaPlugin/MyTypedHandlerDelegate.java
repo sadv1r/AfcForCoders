@@ -38,6 +38,7 @@ public class MyTypedHandlerDelegate extends TypedHandlerDelegate {
     private void checkAchievementReached(Achievable achievable) {
         if (stats.getSymbolsTyped() == achievable.getFinish()) {
             Notifications.Bus.notify(new Notification("Achievement", achievable.getName(), achievable.getText(), NotificationType.INFORMATION));
+            //get запрос на сервер если не оффлайн
         }
     }
 }
