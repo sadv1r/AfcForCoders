@@ -1,0 +1,33 @@
+<idea-plugin>
+  <id>ru.sadv1r.afc.ideaPlugin</id>
+  <name>AFC for coders</name>
+  <version>0.2.0</version>
+  <vendor email="sadv12@gmail.com" url="https://sadv1r.ru">Sadv1r</vendor>
+
+  <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+  <depends>com.intellij.modules.platform</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+    <typedHandler implementation="ru.sadv1r.afc.ideaPlugin.MyTypedHandlerDelegate"/>
+    <applicationConfigurable instance="ru.sadv1r.afc.ideaPlugin.PluginConfigurable"/>
+
+    <consoleFilterProvider implementation="ru.sadv1r.afc.ideaPlugin.MyConsoleFilter"/>
+    <copyPastePostProcessor implementation="ru.sadv1r.afc.ideaPlugin.MyCopyPastePostProcessor"/>
+
+    <toolWindow id="AfcForCoders" icon="/icon.png" anchor="right" factoryClass="ru.sadv1r.afc.ideaPlugin.MyToolWindowFactory"/>
+  </extensions>
+
+  <application-components>
+    <component>
+      <implementation-class>ru.sadv1r.afc.ideaPlugin.Stats</implementation-class>
+      <interface-class>ru.sadv1r.afc.ideaPlugin.Stats</interface-class>
+    </component>
+  </application-components>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+
+</idea-plugin>

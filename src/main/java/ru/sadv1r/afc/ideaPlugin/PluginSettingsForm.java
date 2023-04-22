@@ -1,24 +1,18 @@
 package ru.sadv1r.afc.ideaPlugin;
 
+import com.intellij.ui.JBColor;
+import net.miginfocom.swing.MigLayout;
+import ru.sadv1r.afc.ideaPlugin.achievements.*;
+
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * Created on 12/9/15.
  *
  * @author sadv1r
  * @version 0.1
  */
-
-import com.intellij.ui.JBColor;
-import net.miginfocom.swing.MigLayout;
-import ru.sadv1r.afc.ideaPlugin.achievements.HelloWorld;
-import ru.sadv1r.afc.ideaPlugin.achievements.TenSymbolsTyped;
-import ru.sadv1r.afc.ideaPlugin.achievements.ThousandSymbolsTyped;
-import ru.sadv1r.afc.ideaPlugin.achievements.WeekWithoutNullPointerException;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 public class PluginSettingsForm {
     private final JPanel root;
     private final JCheckBox playOffline = new JCheckBox();
@@ -27,17 +21,12 @@ public class PluginSettingsForm {
     private JButton browse = new JButton("Test");
 
     public PluginSettingsForm() {
-
         JPanel projectSettings = new JPanel(new MigLayout("", "[grow]", "[nogrid]"));
         projectSettings.setBorder(BorderFactory.createTitledBorder("Authorisation Settings"));
         {
             playOffline.setText("Play Offline");
             playOffline.setMnemonic('U');
-            playOffline.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent actionEvent) {
-                    enableOrDisableProjectSettings();
-                }
-            });
+            playOffline.addActionListener(actionEvent -> enableOrDisableProjectSettings());
             //playOffline.setSelected(true);
             projectSettings.add(playOffline, "wrap");
         }
@@ -45,18 +34,12 @@ public class PluginSettingsForm {
             tokenLabel.setDisplayedMnemonic('C');
             tokenLabel.setLabelFor(token);
 
-
-            browse.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println("Тестик нажал");
-                }
-            });
+            browse.addActionListener(e -> System.out.println("Тестик нажал"));
 
             projectSettings.add(tokenLabel, "wrap");
             projectSettings.add(token, "growx");
             projectSettings.add(browse, "wrap");
         }
-
 
         JPanel ideSettings = new JPanel(new MigLayout("", "[grow]", "[nogrid]"));
         ideSettings.setBorder(BorderFactory.createTitledBorder("Achievements"));
@@ -66,15 +49,16 @@ public class PluginSettingsForm {
             ideSettings.add(Box.createVerticalStrut(7));
             ideSettings.add(getAchievementPanel(new ThousandSymbolsTyped()));
             ideSettings.add(Box.createVerticalStrut(7));
+            ideSettings.add(getAchievementPanel(new LakhSymbolsTyped()));
+            ideSettings.add(Box.createVerticalStrut(7));
+            ideSettings.add(getAchievementPanel(new HalfMillionSymbolsTyped()));
+            ideSettings.add(Box.createVerticalStrut(7));
+            ideSettings.add(getAchievementPanel(new MillionSymbolsTyped()));
+            ideSettings.add(Box.createVerticalStrut(7));
             ideSettings.add(getAchievementPanel(new HelloWorld()));
             ideSettings.add(Box.createVerticalStrut(7));
             ideSettings.add(getAchievementPanel(new WeekWithoutNullPointerException()));
-
-
-
         }
-
-
 
 //        {
 //            JLabel label = new JLabel("SBT launcher JAR file (sbt-launch.jar). Leave blank to use the bundled launcher.");
@@ -134,6 +118,17 @@ public class PluginSettingsForm {
         enableOrDisableProjectSettings();
     }
 
+    public static void main(String[] args) {
+        PluginSettingsForm form = new PluginSettingsForm();
+
+        JFrame frame = new JFrame("Test: AfcSettingsForm");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setContentPane(form.createComponent());
+        frame.setSize(600, 600);
+        frame.setLocation(500, 300);
+        frame.setVisible(true);
+    }
+
     private JPanel getAchievementPanel(Achievable achievement) {
         final JPanel panel = new JPanel();
         panel.setBackground(JBColor.GRAY);
@@ -171,11 +166,9 @@ public class PluginSettingsForm {
      * @param pluginSettings объект настроек плагина
      */
     public void copyTo(PluginSettings pluginSettings) {
-        if (token.getText().length() == 0) {
-            pluginSettings.setToken("");
-        } else {
+        if (token.getText().length() != 0) {
             System.out.println("Сохраняю настройки");
-            pluginSettings.setToken(token.getText());
+            pluginSettings.storeToken(token.getText());
         }
 
         pluginSettings.setPlayOffline(playOffline.isSelected());
@@ -188,21 +181,15 @@ public class PluginSettingsForm {
      * @param pluginSettings объект настроек плагина
      */
     public void copyFrom(PluginSettings pluginSettings) {
-        if (pluginSettings.getToken().length() == 0) {
-            token.setText("");
-        } else {
-            token.setText(pluginSettings.getToken());
-        }
-
+        token.setText(pluginSettings.getToken().orElse(""));
         playOffline.setSelected(pluginSettings.isPlayOffline());
+        enableOrDisableProjectSettings();
     }
 
     public boolean isModified(PluginSettings pluginSettings) {
         return !(this.playOffline.isSelected() == pluginSettings.isPlayOffline() &&
-                this.token.getText().equals(pluginSettings.getToken()));
+                this.token.getText().equals(pluginSettings.getToken().orElse("")));
     }
-
-
 
     private void enableOrDisableProjectSettings() {
         boolean enable = !playOffline.isSelected();
@@ -213,16 +200,5 @@ public class PluginSettingsForm {
 
     public JComponent createComponent() {
         return root;
-    }
-
-    public static void main(String[] args) {
-        PluginSettingsForm form = new PluginSettingsForm();
-
-        JFrame frame = new JFrame("Test: AfcSettingsForm");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setContentPane(form.createComponent());
-        frame.setSize(600, 600);
-        frame.setLocation(500, 300);
-        frame.setVisible(true);
     }
 }

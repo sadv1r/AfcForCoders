@@ -8,16 +8,17 @@ import ru.sadv1r.afc.ideaPlugin.achievements.HelloWorld;
 import ru.sadv1r.afc.ideaPlugin.achievements.WeekWithoutNullPointerException;
 
 /**
- * Created by sadvr on 12/11/15.
+ * Created by sadv1r on 12/11/15.
  */
 public class MyConsoleFilter implements ConsoleFilterProvider {
+
     @NotNull
     @Override
     public Filter[] getDefaultFilters(@NotNull Project project) {
         HelloWorld helloWorld = new HelloWorld();
         WeekWithoutNullPointerException weekWithoutNullPointerException = new WeekWithoutNullPointerException();
 
-        Filter[] filters = new Filter[] {helloWorld, weekWithoutNullPointerException};
-        return filters;
+        return new Filter[] {helloWorld, weekWithoutNullPointerException};
     }
+
 }

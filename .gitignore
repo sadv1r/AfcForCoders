@@ -1,5 +1,6 @@
-.idea/
-out/
+.gradle/
+build/
 *.iml
-target/
-AfcForCoders.jar
+.idea/
+/org/
+.DS_Store

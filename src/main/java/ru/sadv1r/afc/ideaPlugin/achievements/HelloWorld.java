@@ -13,7 +13,7 @@ import ru.sadv1r.afc.ideaPlugin.Stats;
  * Created by sadvr on 12/16/15.
  */
 public class HelloWorld implements Filter, Achievable {
-    private final static Stats stats = ServiceManager.getService(Stats.class);
+    private static final Stats stats = ServiceManager.getService(Stats.class);
     private int finish = 1;
     private final String name = "Say hi to all";
     private final String text = "Type traditional Hello World";
@@ -21,7 +21,7 @@ public class HelloWorld implements Filter, Achievable {
     @Nullable
     @Override
     public Result applyFilter(String line, int entireLength) {
-        if (line.contains("Hello World") && stats.getHelloWorldAchieved() != 1) {
+        if (line.contains("Hello World") && stats.getHelloWorldAchieved() != 1) { //TODO Добавить механизм отслеживания было ли уже выдано достижение ранее. Сейчас != 1 это костыль
             Notifications.Bus.notify(new Notification("Achievement", getName(), getText(), NotificationType.INFORMATION));
 
             stats.setHelloWorldAchieved();

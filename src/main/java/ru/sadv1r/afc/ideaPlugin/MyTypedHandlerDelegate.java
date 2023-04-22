@@ -20,12 +20,14 @@ import ru.sadv1r.afc.ideaPlugin.achievements.ThousandSymbolsTyped;
  * @version 0.1
  */
 public class MyTypedHandlerDelegate extends TypedHandlerDelegate {
-    final Stats stats = ServiceManager.getService(Stats.class);
-    final TenSymbolsTyped tenSymbolsTyped = new TenSymbolsTyped();
-    final ThousandSymbolsTyped thousandSymbolsTyped = new ThousandSymbolsTyped();
 
+    private final Stats stats = ServiceManager.getService(Stats.class);
+    private final TenSymbolsTyped tenSymbolsTyped = new TenSymbolsTyped();
+    private final ThousandSymbolsTyped thousandSymbolsTyped = new ThousandSymbolsTyped();
+
+    @NotNull
     @Override
-    public Result charTyped(char c, Project project, @NotNull Editor editor, @NotNull PsiFile file) {
+    public Result charTyped(char c, @NotNull Project project, @NotNull Editor editor, @NotNull PsiFile file) {
         stats.getState();
         stats.symbolTyped();
 
@@ -41,4 +43,5 @@ public class MyTypedHandlerDelegate extends TypedHandlerDelegate {
             //get запрос на сервер если не оффлайн
         }
     }
+
 }

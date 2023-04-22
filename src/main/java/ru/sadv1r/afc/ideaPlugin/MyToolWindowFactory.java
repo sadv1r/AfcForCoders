@@ -20,6 +20,7 @@ import java.awt.*;
  * Created by sadvr on 3/24/16.
  */
 public class MyToolWindowFactory implements ToolWindowFactory {
+
     private JPanel panel1;
     private JTabbedPane tabbedPane1;
     private JTextArea MainText;
@@ -76,8 +77,9 @@ public class MyToolWindowFactory implements ToolWindowFactory {
             label.setDisplayedMnemonic('V');
             label.setLabelFor(jProgressBar);
             panel.add(label);
-            panel.add(jProgressBar);
+            panel.add(jProgressBar, BorderLayout.NORTH);
         }
         return panel;
     }
+
 }
