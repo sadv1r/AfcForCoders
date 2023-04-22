@@ -1,0 +1,63 @@
+import org.jetbrains.changelog.Changelog
+
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.0'
+    id 'org.jetbrains.intellij' version '1.12.0'
+    id 'org.jetbrains.changelog' version '2.0.0'
+}
+
+group 'ru.sadv1r'
+version = properties['pluginVersion']
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation "org.jetbrains.kotlin:kotlin-test"
+}
+
+kotlin {
+    jvmToolchain(11)
+}
+
+test {
+    useJUnit()
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    version = '2022.1'
+    pluginName = 'AFC For Coders'
+    updateSinceUntilBuild = false
+}
+
+changelog {
+    version = project.version
+}
+
+patchPluginXml {
+    //https://plugins.jetbrains.com/docs/intellij/build-number-ranges.html#intellij-platform-based-products-of-recent-ide-versions
+    sinceBuild = "203"
+
+    pluginDescription = """
+This is the small plugin for adding some fun to coding
+<br/>
+<em>It adds the ability to earn achievements during coding</em>
+"""
+
+    changeNotes.set(
+            changelog.renderItem(
+                    changelog.getLatest()
+                            .withHeader(false)
+                            .withEmptySections(false),
+                    Changelog.OutputType.HTML
+            )
+    )
+}
+
+publishPlugin {
+    dependsOn("patchChangelog")
+    token = System.getenv("PUBLISH_TOKEN")
+}

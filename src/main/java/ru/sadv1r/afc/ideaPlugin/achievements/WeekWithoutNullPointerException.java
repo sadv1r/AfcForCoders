@@ -4,6 +4,7 @@ import com.intellij.execution.filters.Filter;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.sadv1r.afc.ideaPlugin.Achievable;
 
@@ -19,7 +20,7 @@ public class WeekWithoutNullPointerException implements Filter, Achievable {
 
     @Nullable
     @Override
-    public Result applyFilter(String line, int entireLength) {
+    public Result applyFilter(@NotNull String line, int entireLength) {
         if (stats.getDaysWithoutNullPointer() < 7) {
             System.out.println("Дней меньше 7");
             if (line.contains("java.lang.NullPointerException")) {
@@ -63,7 +64,7 @@ public class WeekWithoutNullPointerException implements Filter, Achievable {
 
     @Override
     public int getProgress() {
-        return stats.getDaysWithoutNullPointer() >= finish ? finish : stats.getDaysWithoutNullPointer();
+        return Math.min(stats.getDaysWithoutNullPointer(), finish);
     }
 
     @Override

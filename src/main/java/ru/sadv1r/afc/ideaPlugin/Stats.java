@@ -1,8 +1,9 @@
 package ru.sadv1r.afc.ideaPlugin;
 
-import com.intellij.openapi.components.*;
+import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.components.State;
+import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -14,19 +15,24 @@ import org.jetbrains.annotations.Nullable;
 @State(
         name = "AfcStats",
         storages = {
-                @Storage(id = "other", file = "$APP_CONFIG$/AfcStats.xml")
+                @Storage("$APP_CONFIG$/AfcStats.xml")
         }
 )
-public class Stats implements PersistentStateComponent<Stats>, ApplicationComponent {
+public class Stats implements PersistentStateComponent<Stats> {
+
     //TenSymbolsTyped, ThousandSymbolsTyped
-    public int symbolsTyped;
+    private int symbolsTyped;
 
     //HelloWorld
-    public int helloWorldAchieved;
+    private int helloWorldAchieved;
 
     //WeekWithoutNullPointerException
-    public int daysWithoutNullPointer;
-    public long lastDateWithoutNullPointer;
+    private int daysWithoutNullPointer;
+    private long lastDateWithoutNullPointer;
+
+    //DayWithoutCopyPaste
+    private int dayWithoutCopyPaste;
+    private long lastDateDayWithoutCopyPaste;
 
     public int getSymbolsTyped() {
         return symbolsTyped;
@@ -64,6 +70,14 @@ public class Stats implements PersistentStateComponent<Stats>, ApplicationCompon
         this.lastDateWithoutNullPointer = lastDateWithoutNullPointer;
     }
 
+    public long getLastDateDayWithoutCopyPaste() {
+        return lastDateDayWithoutCopyPaste;
+    }
+
+    public void setLastDateDayWithoutCopyPaste(long lastDateDayWithoutCopyPaste) {
+        this.lastDateDayWithoutCopyPaste = lastDateDayWithoutCopyPaste;
+    }
+
     @Nullable
     @Override
     public Stats getState() {
@@ -75,19 +89,4 @@ public class Stats implements PersistentStateComponent<Stats>, ApplicationCompon
         XmlSerializerUtil.copyBean(state, this);
     }
 
-    @Override
-    public void initComponent() {
-
-    }
-
-    @Override
-    public void disposeComponent() {
-
-    }
-
-    @NotNull
-    @Override
-    public String getComponentName() {
-        return "AfcStats";
-    }
 }

@@ -9,10 +9,12 @@ import com.intellij.openapi.components.ServiceManager;
  * @version 0.1
  */
 public interface Achievable {
+
     Stats stats = ServiceManager.getService(Stats.class);
 
     String getName();
     String getText();
     int getProgress();
     int getFinish();
+
 }
