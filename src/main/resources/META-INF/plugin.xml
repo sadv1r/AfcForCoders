@@ -14,7 +14,7 @@
     <applicationConfigurable instance="ru.sadv1r.afc.ideaPlugin.PluginConfigurable"/>
 
     <consoleFilterProvider implementation="ru.sadv1r.afc.ideaPlugin.MyConsoleFilter"/>
-    <copyPastePostProcessor implementation="ru.sadv1r.afc.ideaPlugin.MyCopyPastePostProcessor"/>
+   <!-- <copyPastePostProcessor implementation="ru.sadv1r.afc.ideaPlugin.MyCopyPastePostProcessor"/>-->
 
     <toolWindow id="AfcForCoders" icon="/icon.png" anchor="right" factoryClass="ru.sadv1r.afc.ideaPlugin.MyToolWindowFactory"/>
   </extensions>
